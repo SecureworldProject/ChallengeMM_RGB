@@ -8,8 +8,11 @@ el challenge implementa el mecanismo de lock para que solo un challenge multimed
 
 # requisitos:
 para instalar la libreria openCV simplemente:
+
 pip3 install opencv-python
+
 para aprender opencv https://www.geeksforgeeks.org/opencv-python-tutorial
 
 para instalar el modulo easygui simplemente:
+
 pip3 install easygui
