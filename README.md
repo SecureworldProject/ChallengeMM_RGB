@@ -7,6 +7,8 @@ para probar se incluyen varias imagenes (3 de lena a distinto brillo y otras dos
 el challenge implementa el mecanismo de lock para que solo un challenge multimedia pida interaccion a la vez
 
 # requisitos:
+la variable de entorno SECUREMIRROR_CAPTURES debe existir y apuntar al path donde el server bluetooth deposita las capturas
+
 para instalar la libreria openCV simplemente:
 
 pip3 install opencv-python
