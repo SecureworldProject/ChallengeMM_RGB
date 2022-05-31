@@ -29,3 +29,5 @@ para aprender opencv https://www.geeksforgeeks.org/opencv-python-tutorial
 para instalar el modulo easygui simplemente:
 
 pip3 install easygui
+
+para aprender easygui https://www.geeksforgeeks.org/python-easygui-module-introduction/
