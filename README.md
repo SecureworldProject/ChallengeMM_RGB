@@ -1,5 +1,10 @@
 "# ChallengeMM_RGB" 
-# ChallengeMM_RGB
+# ChallengeMM_RGB y RGBplus
+
+# DESCRIPCION y FIABILIDAD
+RGB y RGBplus son dos challenges que piden al usuario hacer una foto para comprobar que se encuentra en un lugar concreto
+el challenge RGBplus combina la foto con otra que se obtiene de la intranet, de modo que la imagen final es cuna combinacion de ambas
+el RGB tiene una fiabilidad media porque el usuario puede tener una foto almacenada. El RGB plus tiene alta fiabilidad porque es imposible conocer las dos imagenes
 
 # FUNCIONAMIENTO:
 Este challenge analiza las proporciones de R,G,B en una imagen capturada y retorna una tupla r,g,b
