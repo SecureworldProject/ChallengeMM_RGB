@@ -14,7 +14,7 @@ import easygui
 # variables globales
 # ------------------
 props_dict={}
-DEBUG_MODE=False
+DEBUG_MODE=True
 
 def init(props):
     global props_dict
@@ -22,8 +22,8 @@ def init(props):
     
     #props es un diccionario
     props_dict= props
-    executeChallenge()
-    return 0
+    res=executeChallenge()
+    return res # 0 if ok
 
 
 
@@ -62,25 +62,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     output = easygui.msgbox(props_dict["param1"], "challenge MM: RGB")
 
     
-    # nombre del fichero para pruebas (a modo de foto tomada por el usuario)
-    # ----------------------------------------------------------------------
-    # una vez consumida la foto, debe de borrarse
-    #filename="lena.bmp"
-    #filename="lena_mas.bmp"
-    #filename="lena_menos.bmp"
-
-    #filename="kodim07.bmp"
-    #filename="kodim07_mas.bmp"
-    filename="kodim07_menos.bmp"
     
-    #filename="cantinflas.jpg"
-    #filename="cantinflas_mas.jpg"
-    #filename="cantinflas_menos.jpg"
-    
-    #filename="paisaje.jpg"
-    #filename="paisaje_mas.jpg"
-    #filename="paisaje_menos.jpg"
-
     # imagen de intranet complementaria a la foto de usuario
     # ------------------------------------------------------
     #cargamos una imagen de un servidor fijo, la url podria ser un parametro
@@ -89,7 +71,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     if( cap.isOpened() ) :
         ret,remoteImg = cap.read()
-        #cv2.imshow("image",remoteImg)
+        cv2.imshow("image",remoteImg)
     #cv2.waitKey()
     rheight,rwidth,rchannels=remoteImg.shape
     
@@ -118,11 +100,12 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
         
     img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
     # una vez consumida, podemos borrar la captura
-    os.remove(folder+"/"+filename) 
+    if (DEBUG_MODE==False):
+        os.remove(folder+"/"+filename) 
 
     
     B, G, R = cv2.split(img)
-    #cv2.imshow("challenge MM RGB", img)
+    cv2.imshow("challenge MM RGB", img)
     
 
     #cierra la imagen    
