@@ -2,6 +2,7 @@ from math import log10, sqrt
 import cv2
 # para instalar la libreria openCV simplemente:
 # pip3 install opencv-python
+# o bien py -m pip install opencv-python
 # para aprender opencv https://www.geeksforgeeks.org/opencv-python-tutorial
 import numpy as np
 import os
@@ -9,6 +10,7 @@ from pathlib import Path
 import time
 #para instalar el modulo easygui simplemente:
 #pip3 install easygui
+# o bien py -m pip install easygui
 import easygui
 
 # variables globales
@@ -23,8 +25,10 @@ def init(props):
     #props es un diccionario
     props_dict= props
     res=executeChallenge()
-    return res # 0 if ok
-
+    if (res[1]>0):
+        return 0
+    else: 
+        return -1
 
 
 def executeChallenge():
@@ -88,13 +92,13 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
         #filename="kodim07.bmp"
         #filename="kodim07_mas.bmp"
-        filename="kodim07_menos.bmp"
+        #filename="kodim07_menos.bmp"
     
         #filename="cantinflas.jpg"
         #filename="cantinflas_mas.jpg"
         #filename="cantinflas_menos.jpg"
     
-        #filename="paisaje.jpg"
+        filename="paisaje.jpg"
         #filename="paisaje_mas.jpg"
         #filename="paisaje_menos.jpg"
         
@@ -104,7 +108,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
         os.remove(folder+"/"+filename) 
 
     
-    B, G, R = cv2.split(img)
+    
     cv2.imshow("challenge MM RGB", img)
     
 
