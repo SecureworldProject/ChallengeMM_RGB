@@ -28,7 +28,9 @@ la variable de entorno SECUREMIRROR_CAPTURES debe existir y apuntar al path dond
 para instalar la libreria openCV simplemente:
 
 pip3 install opencv-python
-IMPORTANTE: trans instalar opencv, la dll python3.dll de instalacion de python cambia, debes darle acceso al programa que haga uso de este challenge ubicandola en un directorio al que pueda acceder
+
+IMPORTANTE: tras instalar opencv, la dll python3.dll de instalacion de python cambia, debes darle acceso al programa que haga uso de este challenge ubicandola en un directorio al que pueda acceder
+
 para aprender opencv https://www.geeksforgeeks.org/opencv-python-tutorial
 
 para instalar el modulo easygui simplemente:
