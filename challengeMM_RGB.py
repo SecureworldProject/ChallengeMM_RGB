@@ -11,11 +11,11 @@ import time
 #para instalar el modulo easygui simplemente:
 #pip3 install easygui
 # o bien py -m pip install easygui
-import easygui
+import easygui 
 
 # variables globales
 # ------------------
-props_dict={}
+props_dict={} 
 DEBUG_MODE=True
 
 def init(props):
@@ -24,9 +24,7 @@ def init(props):
     
     #props es un diccionario
     props_dict= props
-    
-    # retornamos un cero como si fuese ok, porque
-    # no vamos a ejecutar ahora el challenge
+
     return 0
     """
     res=executeChallenge()
@@ -36,20 +34,16 @@ def init(props):
         return -1
     """
 
+
 def executeChallenge():
     print("Starting execute")
     #for key in os.environ: print(key,':',os.environ[key])
     folder=os.environ['SECUREMIRROR_CAPTURES']
     print ("storage folder is :",folder)
+
     
-    #popup pidiendo interaccion
-
-    #img = cv2.imread(folder+"/"+"ask_interaction.png",cv2.IMREAD_COLOR)
-    #cv2.imshow("challenge MM RGB", img)
-    #cv2.waitKey(0)
-
-    # mecanismo de lock BEGIN
-    # -----------------------
+    #mecanismo de lock BEGIN
+    #-----------------------
     while os.path.exists(folder+"/"+"lock"):
         time.sleep(1)
     Path(folder+"/"+"lock").touch()
@@ -70,20 +64,6 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     #---------------------------------
     output = easygui.msgbox(props_dict["param1"], "challenge MM: RGB")
 
-    
-    
-    # imagen de intranet complementaria a la foto de usuario
-    # ------------------------------------------------------
-    #cargamos una imagen de un servidor fijo, la url podria ser un parametro
-    filename_url=props_dict["param3"] 
-    cap = cv2.VideoCapture(filename_url)
-    
-    if( cap.isOpened() ) :
-        ret,remoteImg = cap.read()
-        cv2.imshow("image",remoteImg)
-    #cv2.waitKey()
-    rheight,rwidth,rchannels=remoteImg.shape
-    
     # lectura de la imagen  en color
     #-------------------------------
     # se supone que el usuario ha depositado un .jpg usando bluetooth
@@ -97,23 +77,27 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
         #filename="kodim07.bmp"
         #filename="kodim07_mas.bmp"
-        #filename="kodim07_menos.bmp"
+        filename="kodim07_menos.bmp"
     
         #filename="cantinflas.jpg"
         #filename="cantinflas_mas.jpg"
         #filename="cantinflas_menos.jpg"
     
-        filename="paisaje.jpg"
+        #filename="paisaje.jpg"
         #filename="paisaje_mas.jpg"
         #filename="paisaje_menos.jpg"
         
+    
+
+    # lectura de la imagen  en color
+    #------------------------------
     img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
     # una vez consumida, podemos borrar la captura
     if (DEBUG_MODE==False):
         os.remove(folder+"/"+filename) 
 
     
-    
+    #B, G, R = cv2.split(img)
     cv2.imshow("challenge MM RGB", img)
     
 
@@ -135,48 +119,23 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     g_total=0
     b_total=0
     brillo_total=0
-    proporcion=height/width
-
-    # hacemos un analisis con mitad de una imagen y mitad de la otra
-    # lo he hecho en diagonal pero podria hacerse en vertical, horizontal, etc
     for y in range(height):
         for x in range(width):
-            if (x*proporcion>y):
-                b,g,r=img[y][x]
-                
-            else:
-                ry=int(y*(rheight/height))
-                rx=int(x*(rwidth/width))
-                #b2,g2,r2=remoteImg[ry][rx]
-                b,g,r=remoteImg[ry][rx]
-                
-            # la media funciona (comprobado)
-            #b=(int(b)+int(b2))/2
-            #g=(int(g)+int(g2))/2
-            #r=(int(r)+int(r2))/2
-
-            # max tambien funciona
-            #b=max (b,b2)
-            #r=max(r,r2)
-            #g=max(g,g2)
-            
+            b,g,r=img[y][x]
             if (r>=g and r>=b):
                 r_total+=1 # sumamos un pixel, no su brillo
             if (g>=r and g>=b):
                 g_total+=1 # sumamos un pixel, no su brillo
             if (b>=g and b>=r):
                 b_total+=1 # sumamos un pixel, no su brillo
-            img[y][x]=b,g,r
-    cv2.imshow("RGBplus", img)
+            #img[y][x]=b,g,r
     print ("totales",r_total,g_total,b_total)
     tamano=height*width
     print ("brillo medio=",(brillo_total/(3*height*width)))
     r_ratio=round(10*(r_total/tamano))
     g_ratio=round(10*(g_total/tamano))
     b_ratio=round(10*(b_total/tamano))
-    print ("ratios foto",r_ratio,g_ratio,b_ratio)
-
-    
+    print ("ratios",r_ratio,g_ratio,b_ratio)
 
     #topamos en 9 para obtener desde 000 hasta 999 ( podria llegar a 10)
     r_ratio=min(9,r_ratio)
@@ -197,7 +156,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
 
 if __name__ == "__main__":
-    midict={"param1": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3 , "param3": "https://pics.filmaffinity.com/the_pink_panther-805664537-large.jpg"}
+    midict={"param1": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3}
     init(midict)
-    #executeChallenge()
+    executeChallenge()
 
