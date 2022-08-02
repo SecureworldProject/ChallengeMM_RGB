@@ -107,7 +107,8 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     #mecanismo de lock END
     #-----------------------
-    os.remove(folder+"/"+"lock") 
+    if os.path.exists(folder+"/"+"lock"):
+        os.remove(folder+"/"+"lock") 
     
     #procesamiento
     #calcula la proporcion de pixeles de cada componente que predominan
