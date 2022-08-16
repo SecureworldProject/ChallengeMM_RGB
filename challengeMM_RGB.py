@@ -62,7 +62,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     #popup msgbox pidiendo interaccion
     #---------------------------------
-    output = easygui.msgbox(props_dict["param1"], "challenge MM: RGB")
+    output = easygui.msgbox(props_dict["interactionText"], "challenge MM: RGB")
 
     # lectura de la imagen  en color
     #-------------------------------
@@ -157,7 +157,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
 
 if __name__ == "__main__":
-    midict={"param1": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3}
+    midict={"interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3}
     init(midict)
     executeChallenge()
 

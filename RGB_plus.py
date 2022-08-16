@@ -12,6 +12,7 @@ import time
 #pip3 install easygui
 # o bien py -m pip install easygui
 import easygui
+import lock
 
 # variables globales
 # ------------------
@@ -27,14 +28,8 @@ def init(props):
     
     # retornamos un cero como si fuese ok, porque
     # no vamos a ejecutar ahora el challenge
-    return 0
-    """
-    res=executeChallenge()
-    if (res[1]>0):
-        return 0
-    else: 
-        return -1
-    """
+    return 0 # si init va mal retorna -1 else retorna 0
+    
 
 def executeChallenge():
     print("Starting execute")
@@ -50,10 +45,12 @@ def executeChallenge():
 
     # mecanismo de lock BEGIN
     # -----------------------
+    lock.lockIN("RGBplus")
+    """
     while os.path.exists(folder+"/"+"lock"):
         time.sleep(1)
     Path(folder+"/"+"lock").touch()
-
+    """
     # pregunta si el usuario tiene movil con capacidad foto
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
@@ -63,19 +60,20 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     #capable=easygui.buttonbox('¿Tienes un movil con bluetooth activo y \
     #emparejado con tu PC con capacidad para hacer una foto?', 'RGB plus', ('SI', 'NO'))
     if (capable==False):
-        os.remove(folder+"/"+"lock")
+        lok.lockOUT("RGBplus")
+        #os.remove(folder+"/"+"lock")
         return 0,0 # clave cero, longitud cero
     
     #popup msgbox pidiendo interaccion
     #---------------------------------
-    output = easygui.msgbox(props_dict["param1"], "challenge MM: RGB")
+    output = easygui.msgbox(props_dict["interactionText"], "challenge MM: RGB")
 
     
     
     # imagen de intranet complementaria a la foto de usuario
     # ------------------------------------------------------
     #cargamos una imagen de un servidor fijo, la url podria ser un parametro
-    filename_url=props_dict["param3"] 
+    filename_url=props_dict["NetworkImage"] 
     cap = cv2.VideoCapture(filename_url)
     
     if( cap.isOpened() ) :
@@ -123,8 +121,11 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     #mecanismo de lock END
     #-----------------------
+    lock.lockOUT("RGBplus")
+    """
     if os.path.exists(folder+"/"+"lock"):
         os.remove(folder+"/"+"lock") 
+    """
     
     #procesamiento
     #calcula la proporcion de pixeles de cada componente que predominan
@@ -198,7 +199,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
 
 if __name__ == "__main__":
-    midict={"param1": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3 , "param3": "https://pics.filmaffinity.com/the_pink_panther-805664537-large.jpg"}
+    midict={"interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3 , "NetworkImage": "https://pics.filmaffinity.com/the_pink_panther-805664537-large.jpg"}
     init(midict)
-    #executeChallenge()
+    executeChallenge()
 
