@@ -44,10 +44,11 @@ def executeChallenge():
     
     #mecanismo de lock BEGIN
     #-----------------------
-    while os.path.exists(folder+"/"+"lock"):
+    lock.lockIN("RGB")
+    """while os.path.exists(folder+"/"+"lock"):
         time.sleep(1)
     Path(folder+"/"+"lock").touch()
-
+    """
     # pregunta si el usuario tiene movil con capacidad foto
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
@@ -107,9 +108,11 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     #mecanismo de lock END
     #-----------------------
+    lock.lockOUT("RGB")
+    """
     if os.path.exists(folder+"/"+"lock"):
         os.remove(folder+"/"+"lock") 
-    
+    """
     #procesamiento
     #calcula la proporcion de pixeles de cada componente que predominan
     #sobre los demas. la proporcion es casi independiente del brillo.
