@@ -105,7 +105,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
         os.remove(folder+"/"+filename)
         
     if (DEBUG_MODE==True): #mostramos imagenes en modo debug
-        cv2.imshow("challenge MM RGB", img)
+        cv2.imshow("challenge MM RGBplus", img)
     
     
     #mecanismo de lock END

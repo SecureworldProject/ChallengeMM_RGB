@@ -11,7 +11,8 @@ import time
 #para instalar el modulo easygui simplemente:
 #pip3 install easygui
 # o bien py -m pip install easygui
-import easygui 
+import easygui
+import lock
 
 # variables globales
 # ------------------
@@ -25,14 +26,9 @@ def init(props):
     #props es un diccionario
     props_dict= props
 
-    return 0
-    """
-    res=executeChallenge()
-    if (res[1]>0):
-        return 0
-    else: 
-        return -1
-    """
+    # retornamos un cero como si fuese ok, porque
+    # no vamos a ejecutar ahora el challenge
+    return 0 # si init va mal retorna -1 else retorna 0
 
 
 def executeChallenge():
@@ -45,21 +41,22 @@ def executeChallenge():
     #mecanismo de lock BEGIN
     #-----------------------
     lock.lockIN("RGB")
-    """while os.path.exists(folder+"/"+"lock"):
-        time.sleep(1)
-    Path(folder+"/"+"lock").touch()
-    """
+    
     # pregunta si el usuario tiene movil con capacidad foto
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
     capable=easygui.ynbox(msg='¿Tienes un movil con bluetooth activo y \
 emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     print (capable)
-    #capable=easygui.buttonbox('¿Tienes un movil con bluetooth activo y \
-    #emparejado con tu PC con capacidad para hacer una foto?', 'RGB plus', ('SI', 'NO'))
+
     if (capable==False):
-        os.remove(folder+"/"+"lock")
-        return 0,0 # clave cero, longitud cero
+        lock.lockOUT("RGB")
+        print ("return key zero and long zero")
+        key=0
+        key_size=0
+        result =(key,key_size)
+        print ("result:",result)
+        return result # clave cero, longitud cero
     
     #popup msgbox pidiendo interaccion
     #---------------------------------
@@ -70,7 +67,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     # se supone que el usuario ha depositado un .jpg usando bluetooth
     # el nombre de la foto puede ser siempre el mismo, fijado por el proxy bluetooth.
     # aqui vamos a "forzar" el nombre del fichero para pruebas
-    filename="captura.jpg"
+    filename="capture.jpg"
     if (DEBUG_MODE==True):
         #filename="lena.bmp"
         #filename="lena_mas.bmp"
@@ -78,13 +75,13 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
         #filename="kodim07.bmp"
         #filename="kodim07_mas.bmp"
-        filename="kodim07_menos.bmp"
+        #filename="kodim07_menos.bmp"
     
         #filename="cantinflas.jpg"
         #filename="cantinflas_mas.jpg"
         #filename="cantinflas_menos.jpg"
     
-        #filename="paisaje.jpg"
+        filename="paisaje.jpg"
         #filename="paisaje_mas.jpg"
         #filename="paisaje_menos.jpg"
         
@@ -93,26 +90,19 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     # lectura de la imagen  en color
     #------------------------------
     img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
-    # una vez consumida, podemos borrar la captura
+    # una vez consumida, podemos borrar la captura(fichero "capture.jpg")
     if (DEBUG_MODE==False):
         os.remove(folder+"/"+filename) 
 
-    
-    #B, G, R = cv2.split(img)
-    cv2.imshow("challenge MM RGB", img)
+    if (DEBUG_MODE==True): #mostramos imagenes en modo debug
+        cv2.imshow("challenge MM RGB", img)
     
 
-    #cierra la imagen    
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
-    
+ 
     #mecanismo de lock END
     #-----------------------
     lock.lockOUT("RGB")
-    """
-    if os.path.exists(folder+"/"+"lock"):
-        os.remove(folder+"/"+"lock") 
-    """
+
     #procesamiento
     #calcula la proporcion de pixeles de cada componente que predominan
     #sobre los demas. la proporcion es casi independiente del brillo.
