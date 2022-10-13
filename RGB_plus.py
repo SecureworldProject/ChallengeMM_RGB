@@ -98,11 +98,22 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
         filename="paisaje.jpg"
         #filename="paisaje_mas.jpg"
         #filename="paisaje_menos.jpg"
-        
-    img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
+
+    if os.path.exists(folder+"/"+filename):    
+        img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
+    else:
+        print ("ERROR: el fichero de captura",filename," no existe")
+        key=0
+        key_size=0
+        result =(key,key_size)
+        print ("result:",result)
+        lock.lockOUT("RGBplus")
+        return result # clave cero, longitud cero
+    
     # una vez consumida, podemos borrar la captura (fichero "capture.jpg")
     if (DEBUG_MODE==False):
-        os.remove(folder+"/"+filename)
+        if os.path.exists(folder+"/"+filename):    
+            os.remove(folder+"/"+filename)
         
     if (DEBUG_MODE==True): #mostramos imagenes en modo debug
         cv2.imshow("challenge MM RGBplus", img)
@@ -142,7 +153,10 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
             if (b>=g and b>=r):
                 b_total+=1 # sumamos un pixel, no su brillo
             img[y][x]=b,g,r
-    cv2.imshow("RGBplus", img)
+
+    if (DEBUG_MODE==True):        
+        cv2.imshow("RGBplus", img)
+
     print ("totales",r_total,g_total,b_total)
     tamano=height*width
     r_ratio=round(10*(r_total/tamano))

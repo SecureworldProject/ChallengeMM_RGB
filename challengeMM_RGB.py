@@ -89,10 +89,21 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
     # lectura de la imagen  en color
     #------------------------------
-    img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
+    if os.path.exists(folder+"/"+filename):
+        img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
     # una vez consumida, podemos borrar la captura(fichero "capture.jpg")
+    else:
+        print ("ERROR: el fichero de captura",filename," no existe")
+        key=0
+        key_size=0
+        result =(key,key_size)
+        print ("result:",result)
+        lock.lockOUT("RGB")
+        return result # clave cero, longitud cero
+    
     if (DEBUG_MODE==False):
-        os.remove(folder+"/"+filename) 
+        if os.path.exists(folder+"/"+filename):    
+            os.remove(folder+"/"+filename)
 
     if (DEBUG_MODE==True): #mostramos imagenes en modo debug
         cv2.imshow("challenge MM RGB", img)
