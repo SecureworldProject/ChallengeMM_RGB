@@ -24,8 +24,9 @@ Es un porcentaje en tramos de 10%, hay mucho margen de variación sin cambio en 
 
 # requisitos:
 la variable de entorno SECUREMIRROR_CAPTURES debe existir y apuntar al path donde el server bluetooth deposita las capturas
-el fichero de captura se debe llamar "capture.jpg"
-hay una variable llamada "DEBUG_MODE" que la puedes cambiar a True o False. En caso True en lugar del fichero capture.jpg se usa paisaje.jpg y ademas no se borra el fichero capture.jpg despues de procesar. Otra caracteristica de DEBUG_MODE=True es que muestra las imagenes en pantalla (molestando un poco, claro)
+el fichero de captura se debe llamar "capture.jpg".
+
+Hay una variable llamada "DEBUG_MODE" que la puedes cambiar a True o False. En caso True en lugar del fichero capture.jpg se usa paisaje.jpg y ademas no se borra el fichero capture.jpg despues de procesar. Otra caracteristica de DEBUG_MODE=True es que muestra las imagenes en pantalla (molestando un poco, claro)
 En caso DEBUG_MODE=fase, se usa "capture.jpg" y ademas la imagen se borra tras el procesamiento
 
 para instalar la libreria openCV simplemente:
