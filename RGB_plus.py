@@ -33,36 +33,29 @@ def init(props):
 
 def executeChallenge():
     print("Starting execute")
-    #for key in os.environ: print(key,':',os.environ[key])
+    #for key in os.environ: print(key,':',os.environ[key]) # es para ver variables entorno
     folder=os.environ['SECUREMIRROR_CAPTURES']
     print ("storage folder is :",folder)
     
-    #popup pidiendo interaccion
-
-    #img = cv2.imread(folder+"/"+"ask_interaction.png",cv2.IMREAD_COLOR)
-    #cv2.imshow("challenge MM RGB", img)
-    #cv2.waitKey(0)
-
     # mecanismo de lock BEGIN
     # -----------------------
     lock.lockIN("RGBplus")
-    """
-    while os.path.exists(folder+"/"+"lock"):
-        time.sleep(1)
-    Path(folder+"/"+"lock").touch()
-    """
+
     # pregunta si el usuario tiene movil con capacidad foto
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
     capable=easygui.ynbox(msg='¿Tienes un movil con bluetooth activo y \
 emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     print (capable)
-    #capable=easygui.buttonbox('¿Tienes un movil con bluetooth activo y \
-    #emparejado con tu PC con capacidad para hacer una foto?', 'RGB plus', ('SI', 'NO'))
+
     if (capable==False):
-        lok.lockOUT("RGBplus")
-        #os.remove(folder+"/"+"lock")
-        return 0,0 # clave cero, longitud cero
+        lock.lockOUT("RGBplus")
+        print ("return key zero and long zero")
+        key=0
+        key_size=0
+        result =(key,key_size)
+        print ("result:",result)
+        return result # clave cero, longitud cero
     
     #popup msgbox pidiendo interaccion
     #---------------------------------
@@ -78,7 +71,8 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     
     if( cap.isOpened() ) :
         ret,remoteImg = cap.read()
-        cv2.imshow("image",remoteImg)
+        if (DEBUG_MODE==True): #mostramos imagenes en modo debug
+            cv2.imshow("image",remoteImg)
     #cv2.waitKey()
     rheight,rwidth,rchannels=remoteImg.shape
     
@@ -87,7 +81,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     # se supone que el usuario ha depositado un .jpg usando bluetooth
     # el nombre de la foto puede ser siempre el mismo, fijado por el proxy bluetooth.
     # aqui vamos a "forzar" el nombre del fichero para pruebas
-    filename="captura.jpg"
+    filename="capture.jpg"
     if (DEBUG_MODE==True):
         #filename="lena.bmp"
         #filename="lena_mas.bmp"
@@ -106,26 +100,17 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
         #filename="paisaje_menos.jpg"
         
     img = cv2.imread(folder+"/"+filename,cv2.IMREAD_COLOR)
-    # una vez consumida, podemos borrar la captura
+    # una vez consumida, podemos borrar la captura (fichero "capture.jpg")
     if (DEBUG_MODE==False):
-        os.remove(folder+"/"+filename) 
-
+        os.remove(folder+"/"+filename)
+        
+    if (DEBUG_MODE==True): #mostramos imagenes en modo debug
+        cv2.imshow("challenge MM RGB", img)
     
-    
-    cv2.imshow("challenge MM RGB", img)
-    
-
-    #cierra la imagen    
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
     
     #mecanismo de lock END
     #-----------------------
     lock.lockOUT("RGBplus")
-    """
-    if os.path.exists(folder+"/"+"lock"):
-        os.remove(folder+"/"+"lock") 
-    """
     
     #procesamiento
     #calcula la proporcion de pixeles de cada componente que predominan
@@ -136,32 +121,20 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     r_total=0
     g_total=0
     b_total=0
-    brillo_total=0
     proporcion=height/width
 
     # hacemos un analisis con mitad de una imagen y mitad de la otra
     # lo he hecho en diagonal pero podria hacerse en vertical, horizontal, etc
     for y in range(height):
         for x in range(width):
-            if (x*proporcion>y):
-                b,g,r=img[y][x]
+            if (x*proporcion>y): #porcion triangular
+                b,g,r=img[y][x] 
                 
-            else:
+            else: # la otra porcion la cogemos de la otra imagen
                 ry=int(y*(rheight/height))
                 rx=int(x*(rwidth/width))
-                #b2,g2,r2=remoteImg[ry][rx]
                 b,g,r=remoteImg[ry][rx]
                 
-            # la media funciona (comprobado)
-            #b=(int(b)+int(b2))/2
-            #g=(int(g)+int(g2))/2
-            #r=(int(r)+int(r2))/2
-
-            # max tambien funciona
-            #b=max (b,b2)
-            #r=max(r,r2)
-            #g=max(g,g2)
-            
             if (r>=g and r>=b):
                 r_total+=1 # sumamos un pixel, no su brillo
             if (g>=r and g>=b):
@@ -172,7 +145,6 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
     cv2.imshow("RGBplus", img)
     print ("totales",r_total,g_total,b_total)
     tamano=height*width
-    print ("brillo medio=",(brillo_total/(3*height*width)))
     r_ratio=round(10*(r_total/tamano))
     g_ratio=round(10*(g_total/tamano))
     b_ratio=round(10*(b_total/tamano))
