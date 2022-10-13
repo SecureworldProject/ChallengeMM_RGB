@@ -3,8 +3,8 @@
 
 # DESCRIPCION y FIABILIDAD
 RGB y RGBplus son dos challenges que piden al usuario hacer una foto para comprobar que se encuentra en un lugar concreto
-el challenge RGBplus combina la foto con otra que se obtiene de la intranet, de modo que la imagen final es cuna combinacion de ambas
-el RGB tiene una fiabilidad media porque el usuario puede tener una foto almacenada. El RGB plus tiene alta fiabilidad porque es imposible conocer las dos imagenes
+el challenge RGBplus combina la foto con otra que se obtiene de la intranet, de modo que la imagen final es una combinacion de ambas
+el RGB tiene una fiabilidad media porque el usuario puede tener una foto almacenada. El **RGB plus tiene alta fiabilidad** porque es imposible conocer las dos imagenes
 
 # FUNCIONAMIENTO:
 Este challenge analiza las proporciones de R,G,B en una imagen capturada y retorna una tupla r,g,b
@@ -23,10 +23,10 @@ Es un porcentaje en tramos de 10%, hay mucho margen de variación sin cambio en 
 
 
 # requisitos:
-la variable de entorno SECUREMIRROR_CAPTURES debe existir y apuntar al path donde el server bluetooth deposita las capturas
+la variable de entorno **SECUREMIRROR_CAPTURES** debe existir y apuntar al path donde el server bluetooth deposita las capturas
 el fichero de captura se debe llamar "capture.jpg".
 
-Hay una variable llamada "DEBUG_MODE" que la puedes cambiar a True o False. En caso True en lugar del fichero capture.jpg se usa paisaje.jpg y ademas no se borra el fichero capture.jpg despues de procesar. Otra caracteristica de DEBUG_MODE=True es que muestra las imagenes en pantalla (molestando un poco, claro)
+Hay una variable en el challenge (en ambos challenges) llamada **"DEBUG_MODE"** que la puedes cambiar a True o False. En caso True en lugar del fichero capture.jpg se usa paisaje.jpg y ademas no se borra el fichero capture.jpg despues de procesar. Otra caracteristica de DEBUG_MODE=True es que muestra las imagenes en pantalla (molestando un poco, claro)
 En caso DEBUG_MODE=fase, se usa "capture.jpg" y ademas la imagen se borra tras el procesamiento
 
 para instalar la libreria openCV simplemente:
