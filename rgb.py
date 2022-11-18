@@ -17,7 +17,7 @@ import lock
 # variables globales
 # ------------------
 props_dict={} 
-DEBUG_MODE=True
+DEBUG_MODE=False
 
 def init(props):
     global props_dict
@@ -42,25 +42,25 @@ def executeChallenge():
     #-----------------------
     lock.lockIN("RGB")
     
-    # pregunta si el usuario tiene movil con capacidad foto
+    # pregunta si el usuario tiene movil con capacidad para fotos
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
-    capable=easygui.ynbox(msg='¿Tienes un movil con bluetooth activo y \
-emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
-    print (capable)
+    conexion=easygui.ynbox(msg='¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?', choices=("Yes","Not"))
+    print (conexion)
 
-    if (capable==False):
+    #popup msgbox pidiendo interaccion
+    #---------------------------------
+    sent=easygui.ynbox(msg='¿Has enviado la imagen desde el móvil a tu PC?', choices=("Yes","Not"))
+    print (sent)
+
+    if (conexion==False | sent== False):
         lock.lockOUT("RGB")
         print ("return key zero and long zero")
         key=0
         key_size=0
         result =(key,key_size)
         print ("result:",result)
-        return result # clave cero, longitud cero
-    
-    #popup msgbox pidiendo interaccion
-    #---------------------------------
-    output = easygui.msgbox(props_dict["interactionText"], "challenge MM: RGB")
+        return result # clave cero, longitud cero 
 
     # lectura de la imagen  en color
     #-------------------------------
@@ -161,7 +161,7 @@ emparejado con tu PC con capacidad para hacer una foto?', choices=("Yes","Not"))
 
 
 if __name__ == "__main__":
-    midict={"interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared", "param2":3}
+    midict={"interactionText": "", "param2":3}
     init(midict)
     executeChallenge()
 
