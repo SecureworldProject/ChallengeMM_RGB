@@ -45,8 +45,7 @@ para aprender easygui https://www.geeksforgeeks.org/python-easygui-module-introd
 
 configuracion de ejemplo json:
 
-...
-
+```
 {
   "FileName": "challenge_loader_python.dll",
   "Description": "C:\\proyectos\\proyectos09\\SECUREWORLD\\challenges_py\\DLL_VALIDATOR-NOKIA\\",
@@ -60,7 +59,7 @@ configuracion de ejemplo json:
 "Requirements": "none" 
 }
 
-...
+```
 
 
 
