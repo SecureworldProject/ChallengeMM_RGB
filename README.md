@@ -43,12 +43,12 @@ pip3 install easygui
 
 para aprender easygui https://www.geeksforgeeks.org/python-easygui-module-introduction/
 
-configuracion de ejemplo json:
+configuracion de ejemplo json para RGBplus:
 
 ```
 {
   "FileName": "challenge_loader_python.dll",
-  "Description": "C:\\proyectos\\proyectos09\\SECUREWORLD\\challenges_py\\DLL_VALIDATOR-NOKIA\\",
+  "Description": "challenge RGBplus para asegurar localizacion",
   "Props": {
     "module_python": "RGB_plus",
     "validity_time": 3600,
@@ -56,9 +56,23 @@ configuracion de ejemplo json:
     "interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared",
     "NetworkImage": "https://pics.filmaffinity.com/the_pink_panther-805664537-large.jpg"
 },
-"Requirements": "none" 
+"Requirements": "camera" 
 }
 
+```
+configuracion de ejemplo json para RGB
+```
+{
+  "FileName": "challenge_loader_python.dll",
+  "Description": "challenge RGB para asegurar localizacion",
+  "Props": {
+    "module_python": "RGB",
+    "validity_time": 3600,
+    "refresh_time": 10,
+    "interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared",
+   },
+"Requirements": "camera" 
+}
 ```
 
 
