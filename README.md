@@ -42,3 +42,23 @@ para instalar el modulo easygui simplemente:
 pip3 install easygui
 
 para aprender easygui https://www.geeksforgeeks.org/python-easygui-module-introduction/
+
+configuracion de ejemplo json
+
+{
+
+"FileName": "challenge_loader_python.dll",
+"Description": "C:\\proyectos\\proyectos09\\SECUREWORLD\\challenges_py\\DLL_VALIDATOR-NOKIA\\",
+"Props": {
+  "module_python": "RGB_plus",
+  "validity_time": 3600,
+  "refresh_time": 10,
+  "interactionText": "Por favor haz una captura de la imagen que visualizas en la pantalla de la pared",
+  "NetworkImage": "https://pics.filmaffinity.com/the_pink_panther-805664537-large.jpg"
+},
+"Requirements": "none" 
+
+}
+
+
+
