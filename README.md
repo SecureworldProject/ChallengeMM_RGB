@@ -44,6 +44,7 @@ pip3 install easygui
 para aprender easygui https://www.geeksforgeeks.org/python-easygui-module-introduction/
 
 configuracion de ejemplo json:
+
 ...
 
 {
@@ -58,6 +59,7 @@ configuracion de ejemplo json:
 },
 "Requirements": "none" 
 }
+
 ...
 
 
