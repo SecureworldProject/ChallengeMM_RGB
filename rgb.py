@@ -45,12 +45,12 @@ def executeChallenge():
     # pregunta si el usuario tiene movil con capacidad para fotos
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
-    conexion=easygui.ynbox(msg='¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?', choices=("Yes","Not"))
+    conexion=easygui.ynbox('¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?',"challenge MM: RGB", choices=("Yes","Not"))
     print (conexion)
 
     #popup msgbox pidiendo interaccion
     #---------------------------------
-    sent=easygui.ynbox(msg='¿Has enviado la imagen desde el móvil a tu PC?', choices=("Yes","Not"))
+    sent=easygui.ynbox(props_dict["interactionText"], "challenge MM: RGB", choices=("Yes","Not"))
     print (sent)
 
     if (conexion==False | sent== False):
@@ -161,7 +161,6 @@ def executeChallenge():
 
 
 if __name__ == "__main__":
-    midict={"interactionText": "", "param2":3}
+    midict={"interactionText": "¿Has enviado la imagen desde el móvil a tu PC?", "param2":3}
     init(midict)
     executeChallenge()
-
