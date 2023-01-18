@@ -11,7 +11,8 @@ import time
 #para instalar el modulo easygui simplemente:
 #pip3 install easygui
 # o bien py -m pip install easygui
-import easygui
+#import easygui
+from tkinter import messagebox
 import lock
 
 # variables globales
@@ -44,14 +45,27 @@ def executeChallenge():
     # pregunta si el usuario tiene movil con capacidad foto
     # -----------------------------------------------------
     #textos en español, aunque podrian ser parametros adicionales del challenge
-    conexion=easygui.ynbox('¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?',"challenge MM: RGB", choices=("Yes","Not"))
-    print (conexion)
+    #conexion=easygui.ynbox('¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?',"challenge MM: RGB", choices=("Yes","Not"))
+    conexion=messagebox.askyesno('challenge MM: RGB','¿Tienes un movil con bluetooth activo y cámara emparejado con tu PC?')
+    print(conexion)
+    #Si el usuario responde que no ha emparejado móvil y PC, devolvemos clave y longitud 0
+    if (conexion==False):
+        lock.lockOUT("RGBplus")
+        print ("return key zero and long zero")
+        key=0
+        key_size=0
+        result =(key,key_size)
+        print ("result:",result)
+        return result # clave cero, longitud cero
     
     #popup msgbox pidiendo interaccion
     #---------------------------------
-    sent=easygui.ynbox(props_dict["interactionText"], "challenge MM: RGB", choices=("Yes","Not"))
+    #sent=easygui.ynbox(props_dict["interactionText"], "challenge MM: RGB", choices=("Yes","Not"))
+    sent=conexion=messagebox.askyesno('challenge MM: RGB',props_dict['interactionText'])
+    print(sent)
 
-    if (conexion==False | sent== False):
+    #Si el usuario responde que no ha enviado la imagen, devolvemos clave y longitud 0
+    if (sent== False):
         lock.lockOUT("RGBplus")
         print ("return key zero and long zero")
         key=0
