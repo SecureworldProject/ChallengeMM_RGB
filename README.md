@@ -1,4 +1,3 @@
-"# ChallengeMM_RGB" 
 # ChallengeMM_RGB y RGBplus
 
 # DESCRIPCION y FIABILIDAD

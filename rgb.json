@@ -1,0 +1,11 @@
+{
+  "FileName": "challenge_loader_python.dll",
+  "Description": "challenge RGB para asegurar localizacion",
+  "Props": {
+    "module_python": "RGB",
+    "validity_time": 3600,
+    "refresh_time": 10,
+    "interactionText": "'¿Has enviado la imagen desde el móvil a tu PC?'",
+   },
+"Requirements": "camera" 
+}
